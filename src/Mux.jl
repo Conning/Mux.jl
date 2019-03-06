@@ -32,6 +32,6 @@ include("examples/basic.jl")
 include("examples/files.jl")
 
 defaults = stack(todict, basiccatch, splitquery, toresponse, assetserver, pkgfiles)
-wdefaults = stack(todict, wcatch, splitquery)
+#wdefaults = stack(todict, wcatch, splitquery)
 
 end
