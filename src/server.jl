@@ -1,6 +1,6 @@
 using HTTP.Servers, Lazy, Sockets
 
-import HTTP.HandlerFunction
+import HTTP: RequestHandlerFunction, StreamHandlerFunction
 import Base.Meta.isexpr
 #import WebSockets
 
@@ -38,12 +38,13 @@ function mk_response(d::Dict)
   return r
 end
 
-#function http_handler(app::App)
-#  handler = HandlerFunction()
+function http_handler(app::App; stream::Bool=false)
+  f = (req) -> mk_response(app.warez(req))
+  handler = stream ? StreamHandlerFunction(f) : RequestHandlerFunction(f)
   # handler.events["error"]  = (client, error) -> println(error)
   # handler.events["listen"] = (port)          -> println("Listening on $port...")
-#  return handler
-#end
+  return handler
+end
 
 #function ws_handler(app::App)
 #  handler = WebSockets.WebsocketHandler((req, client) -> mk_response(app.warez((req, client))))
