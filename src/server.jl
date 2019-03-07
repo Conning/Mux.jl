@@ -58,11 +58,11 @@ const localhost = ip"0.0.0.0"
 #  @async @errs HTTP.serve(s, host, port; kws...)
 #end
 
-function serve(f, host = localhost, port = default_port; kws...)
+function serve(f::Function, host = localhost, port = default_port; kws...)
   @async @errs HTTP.serve(f, host, port; kws...)
 end
 
-serve(f, port::Integer) = serve(f, localhost, port)
+serve(f::Function, port::Integer; kws...) = serve(f, localhost, port; kws...)
 
 serve(h::App, args...; kws...) =
     serve((req) -> mk_response(h.warez(req)), args...; kws...)
